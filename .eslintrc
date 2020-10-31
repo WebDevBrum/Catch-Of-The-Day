@@ -1,0 +1,22 @@
+{
+  "extends": [
+    "wesbos"
+  ],
+  "rules": {
+    
+    "prettier/prettier": [
+      "error",
+      {
+        
+        "singleQuote": false
+        
+      }
+    ],
+    "quotes": [
+      2,
+      "double"
+      
+    ],
+  },
+  "root": true
+}
