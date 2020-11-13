@@ -14,6 +14,20 @@ class Inventory extends React.Component {
     loadSampleFishes: PropTypes.func,
   };
 
+  state = {
+    uid: null,
+    owner: null,
+  };
+
+  // allows sustained login on refresh
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.authHandler({ user });
+      }
+    });
+  }
+
   authHandler = async (authData) => {
     // 1. Look up the current store in the firebase database
     const store = await base.fetch(this.props.storeId, { context: this });
@@ -39,26 +53,49 @@ class Inventory extends React.Component {
     firebaseApp.auth().signInWithPopup(authProvider).then(this.authHandler);
   };
 
+  logout = async () => {
+    console.log("logging outt!");
+    await firebase.auth().signOut();
+    this.setState({ uid: null });
+  };
+
   render() {
-    return <Login authenticate={this.authenticate} />;
-    // return (
-    //   <div className="Inventory">
-    //     <h2>Inventory</h2>
-    //     {Object.keys(this.props.fishes).map((key) => (
-    //       <EditFishForm
-    //         key={key}
-    //         index={key}
-    //         fish={this.props.fishes[key]}
-    //         updateFish={this.props.updateFish}
-    //         deleteFish={this.props.deleteFish}
-    //       />
-    //     ))}
-    //     <AddFishForm addFish={this.props.addFish} />
-    //     <button onClick={this.props.loadSampleFishes}>
-    //       Load Sample Fishes
-    //     </button>
-    //   </div>
-    // );
+    const logout = <button onClick={this.logout}>Log Out!!</button>;
+
+    // 1 check if they are logged in
+    if (!this.state.uid) {
+      return <Login authenticate={this.authenticate} />;
+    }
+
+    // 2 check if they are not the owner of the store
+    if (this.state.uid !== this.state.owner) {
+      return (
+        <div>
+          <p>Sorry you are not the owner!</p>
+          {logout}
+        </div>
+      );
+    }
+    // 3 They must be the owner, just render the inventory
+    return (
+      <div className="Inventory">
+        <h2>Inventory</h2>
+        {logout}
+        {Object.keys(this.props.fishes).map((key) => (
+          <EditFishForm
+            key={key}
+            index={key}
+            fish={this.props.fishes[key]}
+            updateFish={this.props.updateFish}
+            deleteFish={this.props.deleteFish}
+          />
+        ))}
+        <AddFishForm addFish={this.props.addFish} />
+        <button onClick={this.props.loadSampleFishes}>
+          Load Sample Fishes
+        </button>
+      </div>
+    );
   }
 }
 
