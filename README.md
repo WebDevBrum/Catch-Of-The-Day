@@ -2,9 +2,9 @@
 
 # Catch of the Day 
 
-## A real time react app for a seafood market.
+*A Completed tutorial via WesBos.com*
 
-A completed tutorial via WesBos.com
+## A real time react app for a seafood market.
 
 <img src='readme-images/front.jpeg' width='350' height='200' alt='project preview'/>
 
