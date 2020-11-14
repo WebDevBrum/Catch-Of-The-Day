@@ -12,7 +12,6 @@
 
 https://catch-of-the-day-sd.netlify.app
 
-a completed tutorial via WesBos.com
 -------------------------------------------------
 
 ## Getting Started 
