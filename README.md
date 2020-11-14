@@ -10,6 +10,7 @@
 
 https://catch-of-the-day-sd.netlify.app
 
+### This is a completed tutorial via WesBos.com
 -------------------------------------------------
 
 ## Getting Started 
