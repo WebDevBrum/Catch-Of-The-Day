@@ -12,8 +12,6 @@
 
 https://catch-of-the-day-sd.netlify.app
 
--------------------------------------------------
-
 ## Getting Started 
 
 
